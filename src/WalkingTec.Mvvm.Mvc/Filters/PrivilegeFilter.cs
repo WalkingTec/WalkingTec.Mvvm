@@ -62,11 +62,11 @@ namespace WalkingTec.Mvvm.Mvc.Filters
             var isDebug = ad.MethodInfo.IsDefined(typeof(DebugOnlyAttribute), false) || ad.ControllerTypeInfo.IsDefined(typeof(DebugOnlyAttribute), false);
             if (controller.ConfigInfo.IsFilePublic == true)
             {
-                if (ad.ControllerName == "_Framework" && (ad.MethodInfo.Name == "GetFile" || ad.MethodInfo.Name == "ViewFile"))
+                if (context.Controller.GetType() == typeof(_FrameworkController) && (ad.MethodInfo.Name == nameof(_FrameworkController.GetFile) || ad.MethodInfo.Name == nameof(_FrameworkController.ViewFile)))
                 {
                     isPublic = true;
                 }
-                if(ad.ControllerTypeInfo.FullName == "WalkingTec.Mvvm.Admin.Api.FileApiController" && (ad.MethodInfo.Name == "GetFileName" || ad.MethodInfo.Name == "GetFile" || ad.MethodInfo.Name == "DownloadFile"))
+                if(!isPublic && ad.ControllerTypeInfo.FullName == "WalkingTec.Mvvm.Admin.Api.FileApiController" && (ad.MethodInfo.Name == "GetFileName" || ad.MethodInfo.Name == "GetFile" || ad.MethodInfo.Name == "DownloadFile"))
                 {
                     isPublic = true;
 
